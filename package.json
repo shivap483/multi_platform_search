@@ -1,0 +1,19 @@
+{
+  "name": "multi_platform_search",
+  "version": "1.0.0",
+  "description": "simple api to search product details in multiple platforms",
+  "main": "index.ts",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shivap483/multi_platform_search.git"
+  },
+  "author": "shiva prasad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shivap483/multi_platform_search/issues"
+  },
+  "homepage": "https://github.com/shivap483/multi_platform_search#readme"
+}
