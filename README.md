@@ -1,6 +1,6 @@
 # Multi platform search
 
-Api that searches different apis
+Api that searches products from different shopping platforms
 
 ## Table of Contents
 
