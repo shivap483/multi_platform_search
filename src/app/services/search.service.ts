@@ -10,11 +10,13 @@ const search = async (keyword: any) => {
         const searchUrl = await searchUtils.getPlatformSearchUrl(platform, keyword);
 
         try {
-            const response = await axios.get(searchUrl);
-            const result = await searchUtils.transformSearchResults(platform.name, response)
+            const response = await axios.get(searchUrl, { timeout: 5000 });
+            const transformedProduct = await searchUtils.transformSearchResults(platform.name, response)
             return {
                 platform: platform.name,
-                results: result
+                name: transformedProduct.name,
+                image: transformedProduct.imageURL,
+                price: transformedProduct.price,
             };
             } catch (error) {
             console.error(`Error searching ${platform.name}:`, error);

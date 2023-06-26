@@ -1,6 +1,6 @@
 const transformSearchResults = async(platformName: String, response:any)=>{
     // here we can either apply filters or sort the results.
-    const transformedResult: any[] = []
+    let transformedResult: any
     switch(platformName){
         case 'amazon':
             // call amazon transformer
@@ -15,7 +15,7 @@ const transformSearchResults = async(platformName: String, response:any)=>{
     }
     // Currently I'm just returning 1 items of the results.
     if (response.data?.results?.length>0) {
-        transformedResult.push(response.data.results[0])
+        transformedResult= response.data.results[0]
     }
     return transformedResult;
 }
