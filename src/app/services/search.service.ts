@@ -10,7 +10,7 @@ const search = async (keyword: any) => {
         const searchUrl = await searchUtils.getPlatformSearchUrl(platform, keyword);
 
         try {
-            const response = await axios.get(searchUrl, { timeout: 5000 });
+            const response = await axios.get(searchUrl, { timeout: appConfig.SEARCH_TIMEOUT });
             const transformedProduct = await searchUtils.transformSearchResults(platform.name, response)
             return {
                 platform: platform.name,
