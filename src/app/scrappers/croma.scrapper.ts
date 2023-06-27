@@ -28,7 +28,7 @@ export class CromaScrapper extends ScrappingService{
     public async parse(html: any): Promise<ParsedData[]> {
         const results: ParsedData[] =[]
         const $ = cheerio.load(html)
-        const elements = $('.product-tuple-list')
+        const elements = $('.product-item')
         elements.each((index, el)=>{
             const item = $(el)
             const title = item.find('h3.product-title').text().trim()
