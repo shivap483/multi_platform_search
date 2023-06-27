@@ -33,7 +33,7 @@ export class RelianceDigitalScrapper extends ScrappingService{
             const item = $(el)
             const title = item.find('p.sp__name').text().trim()
             const imageUrl = `https://www.reliancedigital.in${item.find('img').attr('src')}`
-            const price = item.find('span.TextWeb__Text-sc-1cyx778-0.gimCrs').find('span').eq(1)
+            const price = item.find('span.gimCrs').find('span').eq(1)
             results.push({title, price:price.text(), image:imageUrl})
         })
         return results;
