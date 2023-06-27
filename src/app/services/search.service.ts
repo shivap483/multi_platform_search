@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { appConfig } from '../config/app.config';
 import searchUtils from '../utils/search.utils';
 
@@ -7,26 +6,19 @@ const search = async (keyword: any) => {
 
   // run serch queries concurrently
     const searchPromises = platforms.map(async (platform) => {
-        const searchUrl = await searchUtils.getPlatformSearchUrl(platform, keyword);
-
-        try {
-            const response = await axios.get(searchUrl, { timeout: appConfig.SEARCH_TIMEOUT });
-            const transformedProduct = await searchUtils.transformSearchResults(platform.name, response)
-            return {
-                platform: platform.name,
-                name: transformedProduct.name,
-                image: transformedProduct.imageURL,
-                price: transformedProduct.price,
-            };
-            } catch (error) {
-            console.error(`Error searching ${platform.name}:`, error);
+        const scrapper = await searchUtils.getScrapper(platform);
+        const scrappedData = scrapper.scrapeData(keyword).then(async (responseData)=>{
+            const parsedData = await scrapper.parse(responseData)
+            return {platform: platform.name, results: parsedData};
+        }).catch((err)=>{
+            console.error(`Error searching ${platform.name}:`, err);
             return {
                 platform: platform.name,
                 results: []
             };
-        }
+        });
+        return scrappedData;
     });
-
     // wait for all platforms to resolve
     const searchResults = await Promise.all(searchPromises);
 

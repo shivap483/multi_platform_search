@@ -1,3 +1,10 @@
+import { Platform } from "../constants/platforms";
+import { AmazonScrapper } from "../scrappers/amazon.scrapper";
+import { CromaScrapper } from "../scrappers/croma.scrapper";
+import { FlipkartScrapper } from "../scrappers/flipkart.scrapper";
+import { RelianceDigitalScrapper } from "../scrappers/reliance.digital.scrapper";
+import { ScrappingService } from "../scrappers/scrapper.service";
+
 const transformSearchResults = async(platformName: String, response:any)=>{
     // here we can either apply filters or sort the results.
     let transformedResult: any
@@ -20,22 +27,28 @@ const transformSearchResults = async(platformName: String, response:any)=>{
     return transformedResult;
 }
 
-const getPlatformSearchUrl= async(platform: any, keyword: string)=>{
+const getScrapper= async(platform: any)=>{
+    var scrapper: ScrappingService
 
-    switch(platform){
-        case 'amazon':
-            // call amazon searchUrl getter
+    switch(platform.name){
+        case Platform.AMAZON:
+            scrapper = new AmazonScrapper(platform.url)
             break;
-        case 'flipkart':
-            // call flipkart searchUrl getter
+        case Platform.FLIPKART:
+            scrapper = new FlipkartScrapper(platform.url)
             break;
+        case Platform.CROMA:
+            scrapper =  new CromaScrapper(platform.url)
+            break;
+        case Platform.RELIACE_DIGITAL:
+            scrapper = new RelianceDigitalScrapper(platform.url)
         default:
             // call default transformer
             break;
 
     }
-    // Currently I'm just returning a parameterized string
-    return `${platform.url}?${platform.queryKeyword}=${keyword}`
+    return scrapper;
+    //return `${platform.url}?${platform.queryKeyword}=${keyword}`
 }
 
-export default {transformSearchResults, getPlatformSearchUrl};
+export default {transformSearchResults, getScrapper};
